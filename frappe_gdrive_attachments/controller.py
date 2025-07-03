@@ -309,7 +309,7 @@ def file_upload_to_gdrive(doc, method):
         # Update file URL based on privacy
         if doc.is_private:
             # Private files served through our API
-            file_url = "/api/method/frappe_gdrive_attachment.controller.serve_file?file_id={0}&file_name={1}".format(
+            file_url = "/api/method/frappe_gdrive_attachments.controller.serve_file?file_id={0}&file_name={1}".format(
                 drive_file.get('id'), doc.file_name
             )
         else:
@@ -441,7 +441,7 @@ def upload_existing_file_to_gdrive(file_doc):
         
         # Update file URL
         if doc.is_private:
-            file_url = "/api/method/frappe_gdrive_attachment.controller.serve_file?file_id={0}&file_name={1}".format(
+            file_url = "/api/method/frappe_gdrive_attachments.controller.serve_file?file_id={0}&file_name={1}".format(
                 drive_file.get('id'), doc.file_name
             )
         else:
