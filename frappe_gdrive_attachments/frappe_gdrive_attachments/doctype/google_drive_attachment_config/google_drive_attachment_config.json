@@ -1,0 +1,138 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-03 22:19:01.543228",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "general_configuration_section",
+  "enable_google_drive_upload",
+  "delete_file_from_google_drive",
+  "credentials_and_folder_config_section",
+  "authorization_code",
+  "refresh_token",
+  "authorize_google_drive_access",
+  "column_break_xvbq",
+  "parent_folder_id",
+  "folder_name_prefix",
+  "sharing_settings_section",
+  "file_sharing_permission",
+  "column_break_kvfb",
+  "specific_emails",
+  "migration_section",
+  "migrate_existing_files_to_google_drive"
+ ],
+ "fields": [
+  {
+   "fieldname": "general_configuration_section",
+   "fieldtype": "Section Break",
+   "label": "General Configuration"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_google_drive_upload",
+   "fieldtype": "Check",
+   "label": "Enable Google Drive Upload"
+  },
+  {
+   "default": "0",
+   "fieldname": "delete_file_from_google_drive",
+   "fieldtype": "Check",
+   "label": "Delete file from Google Drive"
+  },
+  {
+   "fieldname": "credentials_and_folder_config_section",
+   "fieldtype": "Section Break",
+   "label": "Credentials and Folder Config"
+  },
+  {
+   "fieldname": "refresh_token",
+   "fieldtype": "Data",
+   "label": "Refresh Token"
+  },
+  {
+   "fieldname": "authorize_google_drive_access",
+   "fieldtype": "Button",
+   "label": "Authorize Google Drive Access"
+  },
+  {
+   "fieldname": "column_break_xvbq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Optional: Google Drive folder ID where all files will be uploaded. Leave blank to use root folder.",
+   "fieldname": "parent_folder_id",
+   "fieldtype": "Data",
+   "label": "Parent Folder ID"
+  },
+  {
+   "description": "Optional: Prefix to add to filenames for better organization (e.g., \"Company_\" will make files like \"Company_Customer_ABC_contract.pdf\")",
+   "fieldname": "folder_name_prefix",
+   "fieldtype": "Data",
+   "label": "Folder Name Prefix"
+  },
+  {
+   "fieldname": "sharing_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Sharing Settings"
+  },
+  {
+   "fieldname": "file_sharing_permission",
+   "fieldtype": "Select",
+   "label": "File Sharing Permission",
+   "options": "\nPrivate\nAnyone with link can view\nAnyone with link can edit\nSpecific people"
+  },
+  {
+   "fieldname": "column_break_kvfb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.file_sharing_permission == 'Specific people'",
+   "description": "Enter email addresses separated by commas (e.g., user1@example.com, user2@example.com)'",
+   "fieldname": "specific_emails",
+   "fieldtype": "Long Text",
+   "label": "Specific Emails"
+  },
+  {
+   "fieldname": "migration_section",
+   "fieldtype": "Section Break",
+   "label": "Migration"
+  },
+  {
+   "fieldname": "migrate_existing_files_to_google_drive",
+   "fieldtype": "Button",
+   "label": "Migrate Existing Files to Google Drive"
+  },
+  {
+   "fieldname": "authorization_code",
+   "fieldtype": "Data",
+   "label": "Authorization Code"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-07-03 22:56:00.987748",
+ "modified_by": "Administrator",
+ "module": "Frappe Gdrive Attachments",
+ "name": "Google Drive Attachment Config",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,7 +1,7 @@
 app_name = "frappe_gdrive_attachments"
 app_title = "Frappe Gdrive Attachments"
 app_publisher = "osama.ahmed@deliverydevs.com"
-app_description = "Frappe app to automatically upload file attachments to Google Drive"
+app_description = "Frappe Frappe App to Upload Attachments to google drive using the attach file Option."
 app_email = "osama.ahmed@deliverydevs.com"
 app_license = "mit"
 
@@ -47,7 +47,9 @@ app_license = "mit"
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-
+doctype_list_js = {
+    "Google Drive Attachment Config": ["frappe_gdrive_attachments/doctype/google_drive_attachment_config/google_drive_attachment_config.js"]
+}
 # Svg Icons
 # ------------------
 # include app icons in desk
@@ -144,7 +146,12 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
-
+doc_events = {
+    "File": {
+        "after_insert": "frappe_gdrive_attachments.controller.file_upload_to_gdrive",
+        "on_trash": "frappe_gdrive_attachments.controller.delete_from_gdrive"
+    }
+}
 # Scheduled Tasks
 # ---------------
 
