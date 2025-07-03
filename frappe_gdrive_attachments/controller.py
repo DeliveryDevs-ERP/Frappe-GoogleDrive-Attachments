@@ -4,6 +4,7 @@ import os
 import re
 import mimetypes
 from io import BytesIO
+from urllib.parse import quote
 
 import frappe
 from frappe.utils import get_site_path
@@ -31,29 +32,25 @@ class GoogleDriveOperations(object):
             
         # Get Google Drive service using Frappe's OAuth
         self.drive_service, self.account = self.get_google_drive_object()
-    
+        
     def get_google_drive_object(self):
         """Get Google Drive service object using Frappe's Google OAuth"""
         try:
-            # Check if Google Drive is configured in Google Settings
-            google_settings = frappe.get_doc("Google Settings")
-            if not google_settings.enable:
-                frappe.throw(frappe._("Google Settings are not enabled. Please enable Google Settings first."))
-            
-            # Use Frappe's Google OAuth for Drive
-            oauth_obj = GoogleOAuth("drive")
-            
-            # Get access token from our config
+            oauth_obj = GoogleOAuth("drive") 
             access_token = self.get_access_token()
-            
-            # Get Google Drive service object
-            google_drive = oauth_obj.get_google_service_object(access_token)
-            
+            refresh_token = self.config.get_password(
+                fieldname="refresh_token", raise_exception=False
+            )
+            # pass both into the Frappe helper
+            google_drive = oauth_obj.get_google_service_object(
+                access_token,
+                refresh_token
+            )
+
             return google_drive, self.config
-            
         except Exception as e:
-            frappe.throw(frappe._("Error initializing Google Drive service: {0}").format(str(e)))
-    
+            frappe.throw(_("Error initializing Google Drive service: {0}").format(str(e)))
+        
     def get_access_token(self):
         """Get access token for Google Drive API"""
         if not self.config.refresh_token:
@@ -224,7 +221,7 @@ class GoogleDriveOperations(object):
 def gdrive_file_regex_match(file_url):
     """Check if file URL is a Google Drive URL"""
     return re.match(
-        r'^(/api/method/frappe_gdrive_attachment\.controller\.serve_file|https://drive\.google\.com)',
+        r'^(/api/method/frappe_gdrive_attachments\.controller\.serve_file|https://drive\.google\.com)',
         file_url
     )
 
@@ -243,9 +240,11 @@ def authorize_access(reauthorize=False, code=None):
                 frappe.db.set_single_value("Google Drive Attachment Config", "parent_folder_id", "")
             
             # Generate authorization URL
-            return oauth_obj.get_authentication_url({
-                "redirect": "/app/Form/Google%20Drive%20Attachment%20Config",
-            })
+            return oauth_obj.get_authentication_url(
+			{
+				"redirect": f"/app/Form/{quote('Google Drive Attachment Config')}",
+			},
+            )
 
         # Exchange authorization code for tokens
         r = oauth_obj.authorize(oauth_code)

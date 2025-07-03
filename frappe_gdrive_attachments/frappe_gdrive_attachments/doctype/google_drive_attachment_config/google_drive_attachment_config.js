@@ -142,7 +142,7 @@ function test_gdrive_connection(frm) {
     }
     
     frappe.call({
-        method: "frappe_gdrive_attachment.controller.test_gdrive_connection",
+        method: "frappe_gdrive_attachments.controller.test_gdrive_connection",
         freeze: true,
         freeze_message: __('Testing Google Drive connection...'),
         callback: function(r) {
