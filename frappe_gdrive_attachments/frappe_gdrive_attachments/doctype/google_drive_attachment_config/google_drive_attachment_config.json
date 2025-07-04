@@ -49,6 +49,7 @@
   {
    "fieldname": "refresh_token",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Refresh Token"
   },
   {
@@ -107,6 +108,7 @@
   {
    "fieldname": "authorization_code",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Authorization Code"
   }
  ],
@@ -114,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-07-03 22:56:00.987748",
+ "modified": "2025-07-04 00:03:22.711630",
  "modified_by": "Administrator",
  "module": "Frappe Gdrive Attachments",
  "name": "Google Drive Attachment Config",
