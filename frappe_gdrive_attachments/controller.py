@@ -174,17 +174,18 @@ class GoogleDriveOperations(object):
                         
         except HttpError as e:
             frappe.log_error("Error setting file permissions: {0}".format(str(e)))
-    
+
     def delete_file_from_drive(self, file_id):
-        """Delete file from Google Drive"""
-        if not self.config.delete_file_from_drive:
+        """Delete file from Google Drive if enabled in config."""
+        delete_flag = frappe.db.get_single_value(
+            "Google Drive Attachment Config", "delete_file_from_google_drive"
+        ) or 0
+        if not int(delete_flag):
             return
-        
         try:
             self.drive_service.files().delete(fileId=file_id).execute()
-            
         except HttpError as e:
-            frappe.log_error("Error deleting file from Google Drive: {0}".format(str(e)))
+            frappe.log_error(f"Error deleting file from Google Drive in Func: {e}")
     
     def download_file_from_drive(self, file_id):
         """Download file from Google Drive"""
